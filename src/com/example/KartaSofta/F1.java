@@ -33,17 +33,22 @@ public class F1 extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(LOG_TAG," starting f1");
+
+        if (!fragmentInterface.isLoaded())
+        {
         adapter1 = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,new ArrayList<String>());
         setListAdapter(adapter1);
+        }
         PendingIntent pi =  (getActivity().createPendingResult(1,new Intent(),0));
         Intent intent1 = new Intent(getActivity(),DownloadService.class);
         intent1.putExtra(MyApp.PARAM_INTENT,pi);
         intent1.putExtra("mainUrl",url);
-        if (fragmentInterface.getParentId().equals(String.valueOf(-1)))
+        if (!fragmentInterface.isLoaded())
         {
             getActivity().startService(intent1);
         }
         View v  = inflater.inflate(R.layout.f1, null);
+        fragmentInterface.set_isLoaded(true);
         return v;
     }
 
@@ -69,6 +74,7 @@ public class F1 extends ListFragment {
         adapter1.clear();
         adapter1.addAll(data);
         adapter1.notifyDataSetChanged();
+        //setListAdapter(adapter1);
     }
     @Override
     public void onListItemClick(ListView l,View v,int position,long id)
@@ -95,10 +101,12 @@ public class F1 extends ListFragment {
         {
             F2 imageFragment = fragmentInterface.getSecondFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
+            fragmentInterface.increaseIndicator();
+            fragmentInterface.setParentId(parentId);
             ft.hide(this);
             ft.add(R.id.main_layout,imageFragment);
             imageFragment.setCategory(list.get(position));
-            ft.addToBackStack("imageFragment");
+            //ft.addToBackStack("imageFragment");
             ft.commit();
         }
     }

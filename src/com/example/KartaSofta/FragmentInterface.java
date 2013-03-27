@@ -23,4 +23,6 @@ public interface FragmentInterface {
     public void increaseIndicator();
     public void decreaseIndicator();
     public int getIndicator();
+    public boolean isLoaded();
+    public void set_isLoaded(boolean value);
 }

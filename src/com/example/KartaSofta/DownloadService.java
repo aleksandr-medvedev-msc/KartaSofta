@@ -105,6 +105,7 @@ public class DownloadService extends IntentService {
                         return;
                     }
                 }
+                Log.d(LOG_TAG," after ");
                 pi.send(DownloadService.this,MyApp.FINISH_MAIN_XML,new Intent());
             }
             catch (IOException e)
@@ -121,7 +122,6 @@ public class DownloadService extends IntentService {
         public boolean downloadXml(File file,HttpResponse response)
         {
             try {
-
                 file.createNewFile();
                 InputStream stream = response.getEntity().getContent();
                 //FileInputStream stream = (FileInputStream)response.getEntity().getContent();
@@ -203,6 +203,11 @@ public class DownloadService extends IntentService {
             catch (PendingIntent.CanceledException e)
             {
                 Log.d(LOG_TAG, " canceledException caught");
+                e.printStackTrace();
+            }
+            catch (IllegalStateException e)
+            {
+                Log.d(LOG_TAG, " illegal state exception caught");
                 e.printStackTrace();
             }
         }

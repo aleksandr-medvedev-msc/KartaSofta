@@ -20,7 +20,7 @@ public class MyActivity extends Activity implements FragmentInterface {
      * Called when the activity is first created.
      */
     public Map<String,List<Category>> categories;
-
+    private boolean _isLoaded = false;
     private String parentId = String.valueOf(-1);
     public String getParentId() {
         return parentId;
@@ -28,6 +28,14 @@ public class MyActivity extends Activity implements FragmentInterface {
 
     public void setParentId(String parentId) {
         this.parentId = parentId;
+    }
+    public boolean isLoaded()
+    {
+        return _isLoaded;
+    }
+    public void set_isLoaded(boolean value)
+    {
+        _isLoaded = value;
     }
 
     F2 imageFragment;
@@ -55,6 +63,7 @@ public class MyActivity extends Activity implements FragmentInterface {
             if (indicator == 0)
             {
                 super.onBackPressed();
+                return;
             }
             else
             {
@@ -94,6 +103,7 @@ public class MyActivity extends Activity implements FragmentInterface {
                 fragment.setAdapterData(newAdapterData,getApplicationContext());
                 decreaseIndicator();
                 setParentId(category.getParentId());
+                Log.d(" DDD ","");
             }
 
         }

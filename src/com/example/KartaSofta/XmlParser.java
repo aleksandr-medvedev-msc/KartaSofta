@@ -73,7 +73,7 @@ public class XmlParser {
                     {
                         if (parser.getAttributeName(i).equals("date"))
                         {
-                            oldDate = parser.getAttributeValue(i);
+                            newDate = parser.getAttributeValue(i);
                             break;
                         }
                     }
@@ -90,6 +90,7 @@ public class XmlParser {
                 }
                 parser.next();
             }
+            Log.d(LOG_TAG, "debug point");
             return !oldDate.equals(newDate);
         }
         catch (XmlPullParserException e)

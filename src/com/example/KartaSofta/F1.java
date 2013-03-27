@@ -99,8 +99,11 @@ public class F1 extends ListFragment {
         }
         else
         {
-            F2 imageFragment = fragmentInterface.getSecondFragment();
+
+            //F2 imageFragment = fragmentInterface.getSecondFragment();
+            F2 imageFragment = new F2(getActivity().getApplicationContext());
             FragmentTransaction ft = getFragmentManager().beginTransaction();
+            //ft.hide(imageFragment);
             fragmentInterface.increaseIndicator();
             fragmentInterface.setParentId(parentId);
             ft.hide(this);

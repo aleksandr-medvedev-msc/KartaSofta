@@ -1,17 +1,12 @@
-package com.example.KartaSofta;
+package com.example.kartasofta;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.widget.SimpleAdapter;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,6 +84,8 @@ public class MyActivity extends Activity implements FragmentInterface {
         else
         {
             ft.hide(imageFragment);
+            ft.detach(imageFragment);
+            ft.remove(imageFragment);
             fragment = new F1();
             ft.add(R.id.main_layout,fragment);
             Category category = findCategory(getParentId());

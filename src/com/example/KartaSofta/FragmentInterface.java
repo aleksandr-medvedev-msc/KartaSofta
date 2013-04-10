@@ -1,9 +1,5 @@
-package com.example.KartaSofta;
+package com.example.kartasofta;
 
-import android.app.Fragment;
-import android.widget.SimpleAdapter;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

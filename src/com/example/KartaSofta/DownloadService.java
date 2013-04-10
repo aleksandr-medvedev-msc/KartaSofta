@@ -1,18 +1,11 @@
-package com.example.KartaSofta;
+package com.example.kartasofta;
 
 import android.app.*;
 import android.content.Intent;
-import android.os.Environment;
-import android.os.IBinder;
-import android.text.LoginFilter;
 import android.util.Log;
-import android.util.StringBuilderPrinter;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 

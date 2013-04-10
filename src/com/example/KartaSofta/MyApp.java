@@ -1,4 +1,4 @@
-package com.example.KartaSofta;
+package com.example.kartasofta;
 
 import android.app.Application;
 import org.apache.http.HttpVersion;

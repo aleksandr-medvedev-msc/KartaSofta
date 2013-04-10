@@ -1,4 +1,4 @@
-package com.example.KartaSofta;
+package com.example.kartasofta;
 
 /**
  * Created with IntelliJ IDEA.

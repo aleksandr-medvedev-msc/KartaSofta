@@ -1,11 +1,12 @@
-package com.example.KartaSofta;
+package com.example.kartasofta;
 
 import android.content.Context;
 import android.util.Log;
-import android.util.StringBuilderPrinter;
+import org.apache.commons.io.input.BOMInputStream;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
+
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,6 +27,7 @@ public class XmlParser {
     private static final String LOG_TAG = "XmlParser_Log";
     public static boolean NeedUpdate(Context context,InputStream stream)
     {
+
         String oldDate = "";
         String newDate = "";
         try {
@@ -172,47 +175,75 @@ public class XmlParser {
         List<Offer> result = new ArrayList<Offer>();
         try {
             XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-            parser.setInput(new InputStreamReader(new FileInputStream(new File(context.getFilesDir().getPath() + "/" + MyApp.MAIN_XML_FILENAME))));
+          //  InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(context.getFilesDir().getPath() + "/" + MyApp.MAIN_XML_FILENAME)));
+            // BufferedReader stream = new BufferedReader(new FileInputStream(new File(context.getFilesDir().getPath() + "/" + MyApp.MAIN_XML_FILENAME)));
+
+            parser.setInput(new InputStreamReader((new FileInputStream(new File(context.getFilesDir().getPath() + "/" + MyApp.MAIN_XML_FILENAME)))));
+
             while (parser.getEventType()!=XmlPullParser.END_DOCUMENT)
             {
                 switch (parser.getEventType())
                 {
                     case XmlPullParser.START_TAG:
+
                         if (parser.getName().equals("offer"))
                         {
                             String id = parser.getAttributeValue(0);
                             parser.nextTag();
-                            if (parser.getName().equals("url"))
-                            {
-                                Log.d(LOG_TAG,parser.getName() + " : name");
-                                String url = parser.nextText();
-                                Log.d(LOG_TAG,url + " : url");
-                                parser.nextTag();
-                                Log.d(LOG_TAG,parser.getName() + " : second name");
-                                String price = parser.nextText();
-                                Log.d(LOG_TAG,price + " : price");
-                                parser.nextTag();
-                                Log.d(LOG_TAG,parser.getName() + " : currencyId name");
-                                String currencyId = parser.nextText();
-                                Log.d(LOG_TAG, currencyId + " : currencyId");
-                                parser.nextTag();
-                                Log.d(LOG_TAG,parser.getName() + " : categoryId name");
-                                String categoryId = parser.nextText();
-                                Log.d(LOG_TAG,categoryId + " : categoryId");
-                                parser.nextTag();
-                                String picture = "";
+                            String _model = "";
+                            String _price = "";
+                            String _url = "";
+                            String _picture = "";
+                            String _categoryId = "";
+                            String _currencyId = "";
+                            String str = parser.getName();
+                            Log.d(" ! "," " );
+                            while (!parser.getName().equals("offer")){
+                                boolean isNeededTag = false;
+                                if (parser.getName().equals("model"))
+                                {
+                                    _model = parser.nextText();
+                                    isNeededTag = true;
+                                }
+                                if (parser.getName().equals("price"))
+                                {
+                                    _price = parser.nextText();
+                                    isNeededTag = true;
+                                }
+                                if (parser.getName().equals("url"))
+                                {
+                                    _url = parser.nextText();
+                                    isNeededTag = true;
+                                }
                                 if (parser.getName().equals("picture"))
                                 {
-                                    picture = parser.nextText();
-                                    parser.nextTag();
-                                }
+                                    _picture = parser.nextText();
+                                    isNeededTag = true;
 
-                                String name = parser.nextText();
+                                }
+                                if (parser.getName().equals("categoryId"))
+                                {
+                                    _categoryId = parser.nextText();
+                                    isNeededTag = true;
+
+                                }
+                                if (parser.getName().equals("currencyId"))
+                                {
+                                    _currencyId = parser.nextText();
+                                    isNeededTag = true;
+
+                                }
+                                if (!isNeededTag)
+                                {
+                                  //  Log.d(LOG_TAG,parser.getEventType() + " parser event type!!!!!");
+                                    parser.nextText();
+                                    //parser.nextTag();
+
+                                }
                                 parser.nextTag();
-                                String description = parser.nextText();
-                                Offer offer = new Offer(id,url,categoryId,currencyId,picture,price,name,description);
-                                result.add(offer);
                             }
+                            Offer offer = new Offer(id,_url,_categoryId,_currencyId,_picture,_price,_model,"");
+                            result.add(offer);
                         }
                         break;
                 }
@@ -221,14 +252,17 @@ public class XmlParser {
         }
         catch (XmlPullParserException e)
         {
+
             e.printStackTrace();
         }
         catch (FileNotFoundException e)
         {
+
             e.printStackTrace();
         }
         catch (IOException e)
         {
+
             e.printStackTrace();
         }
         return result;

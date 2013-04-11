@@ -1,9 +1,8 @@
-package com.example.KartaSofta;
+package com.example.kartasofta;
 
 import android.app.*;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteOutOfMemoryException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,7 +24,7 @@ import java.util.Map;
 public class F1 extends ListFragment {
     private final String LOG_TAG = "F1_LOG";
     private ArrayAdapter<String> adapter1;
-    private final String url = "http://kartasofta.ru/xml/yandex_ks_market.xml";
+    private final String url = "http://kartasofta.ru/xml_yandex/to_android.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,8 +97,8 @@ public class F1 extends ListFragment {
         else
         {
 
-            //F2 imageFragment = fragmentInterface.getSecondFragment();
-            F2 imageFragment = new F2(getActivity().getApplicationContext());
+            F2 imageFragment = fragmentInterface.getSecondFragment();
+            //F2 imageFragment = new F2(getActivity().getApplicationContext());
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             //ft.hide(imageFragment);
             fragmentInterface.increaseIndicator();

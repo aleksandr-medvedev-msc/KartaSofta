@@ -1,12 +1,10 @@
-package com.example.KartaSofta;
+package com.example.kartasofta;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.LinearGradient;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,13 +35,13 @@ public class F2 extends ListFragment {
     public String[] testArray;
     public F2(Context context)
     {
-        testArray = new String[30];
+
         final int[] to = {R.id.image_layout_image,R.id.image_layout_title,R.id.image_layout_description};
         String[] from = {"image","title","description"};
         adapterData = new ArrayList<HashMap<String, Object>>();
         adapter = new SimpleAdapter(context,adapterData,R.layout.image_layout,from,to);
 
-        Log.d(LOG_TAG, " adapter was created") ;
+
     }
     @Override
     public void onAttach(Activity activity)
@@ -54,7 +52,6 @@ public class F2 extends ListFragment {
         } catch (ClassCastException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-
     }
     public void setCategory(Category category)
     {
@@ -62,15 +59,16 @@ public class F2 extends ListFragment {
     }
     public void setAdapterData(List<HashMap<String,Object>> data)
     {
-        Log.d(LOG_TAG,data.size() + " : data.size. " + data.get(0).size() + " : 0 size");
+
         final int[] to = {R.id.image_layout_image,R.id.image_layout_title,R.id.image_layout_description};
+        adapterData.clear();
         adapterData.addAll(data);
         //adapterData = new ArrayList<HashMap<String, Object>>(data);
         //fragmentInterface.setF2Data(adapterData);
         if (data.size()>0&&data.get(0).size()>=3)
         {
             String[] from = {"image","title","description"};
-            Log.d(LOG_TAG,adapterData.size() + " size");
+
             //adapter = new SimpleAdapter(getActivity(),adapterData,R.layout.image_layout,from,to);
 
             setListAdapter(adapter);
@@ -81,7 +79,7 @@ public class F2 extends ListFragment {
             } catch (ClassCastException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
-            //TODO: catch class cast exception
+
             if (map!=null)
             {
                 Log.d(LOG_TAG,map.toString());
@@ -134,7 +132,41 @@ public class F2 extends ListFragment {
                         map.put("image",null);
                     }
                     map.put("title",offer.name);
-                    map.put("description",offer.description);
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(offer.price);
+                    if (offer.price.contains("."))
+                    {
+                        sb.delete(offer.price.indexOf("."),sb.length());
+                    }
+                    sb = sb.reverse();
+                    int shag = 0;
+                    //StringBuilder temp = new StringBuilder();
+                    if (sb.length() > 3)
+                    {
+                        for (int tt = 3; tt < sb.length();tt++)
+                        {
+
+                            if (tt%3==shag)
+                            {
+                                //temp.append(sb.substring(tt-3,tt));
+                                //temp.append(" ");
+                                sb.insert(tt," ");
+                                tt++;
+                                shag++;
+                                if (shag==3)
+                                {
+                                    shag = 0;
+                                }
+                            }
+                        }
+                    }
+                    sb = sb.reverse();
+                    if (offer.price.contains("."))
+                    {
+                        sb.append(offer.price.substring(offer.price.indexOf(".")));
+                    }
+
+                    map.put("description","Цена: " + sb.toString() + " " + "руб." + "      Подробнее >");
                     map.put("id",offer.url);   //Записываем в данные адаптера урл для открытия в браузере при клике, на экране он не отображается.
                     map.put("filename",offer.id);
                     maps.add(map);
@@ -161,11 +193,7 @@ public class F2 extends ListFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("F2_LOG"," on activity result");
-        //adapter = fragmentInterface.getAdapter();
-        //adapterData = fragmentInterface.getF2Data();
-        Log.d(LOG_TAG,testArray.length + " testarray.lenght");
-        Log.d(LOG_TAG,adapterData.size() + " adapter data size");
+
         switch (resultCode)
         {
             case MyApp.FINISH_IMAGE:
@@ -184,7 +212,7 @@ public class F2 extends ListFragment {
                         {
                             adapterData.get(i).remove("image");
                             adapterData.get(i).put("image",imageName);
-                            Log.d(LOG_TAG," egegei : " + imageName);
+
                             adapter.notifyDataSetChanged();
                         }
                     }

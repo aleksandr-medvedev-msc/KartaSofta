@@ -1,10 +1,13 @@
 package com.example.kartasofta;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,19 @@ public class MyActivity extends Activity implements FragmentInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
+
+        ActionBar bar = getActionBar();
+        LinearLayout customActionLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.actionbar_customview,null);
+        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        bar.setCustomView(customActionLayout);
+        bar.setDisplayShowHomeEnabled(true);
+        bar.getCustomView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AboutDialog dialog = new AboutDialog();
+                dialog.show(getFragmentManager(),"dialog");
+            }
+        });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         setParentId(String.valueOf(-1)); //Задаем parentId специальным значением, показывающим, что у данного набора категорий его нет

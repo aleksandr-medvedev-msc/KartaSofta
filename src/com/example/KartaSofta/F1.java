@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.kartasofta.catalog.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class F1 extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(LOG_TAG," starting f1");
+
 
         if (!fragmentInterface.isLoaded())
         {

@@ -9,11 +9,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.TextView;
+import com.kartasofta.catalog.R;
 
 import java.net.URI;
 
@@ -29,8 +33,9 @@ public class AboutDialog extends DialogFragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         getDialog().setTitle("О компании");
         View v = inflater.inflate(R.layout.dialog_about, null);
-        WebView wb = (WebView) v.findViewById(R.id.dialog_about_webview);
-        wb.loadUrl("http://kartasofta.ru/xml_yandex/contact_to_android.php");
+        TextView wb = (TextView) v.findViewById(R.id.dialog_about_webview);
+        wb.setText(XmlParser.AboutParse(getActivity()));
+        //wb.loadUrl("http://kartasofta.ru/xml_yandex/contact_to_android.php");
         v.findViewById(R.id.dialog_about_button_go).setOnClickListener(this);
         v.findViewById(R.id.dialog_about_button_ok).setOnClickListener(this);
         return v;
@@ -43,7 +48,7 @@ public class AboutDialog extends DialogFragment implements View.OnClickListener{
                 dismiss();
                 break;
             case R.id.dialog_about_button_go:
-                Uri uri = Uri.parse("https://kartasofta.ru");
+                Uri uri = Uri.parse("http://kartasofta.ru");
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW,uri);
                 startActivity(browserIntent);
                 break;
@@ -55,11 +60,9 @@ public class AboutDialog extends DialogFragment implements View.OnClickListener{
 
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-
     }
 
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-
     }
 }

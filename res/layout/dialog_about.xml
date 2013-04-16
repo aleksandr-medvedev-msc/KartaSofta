@@ -5,10 +5,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <WebView
+    <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/dialog_about_webview" android:focusable="false" android:layout_weight="1"/>
+            android:id="@+id/dialog_about_webview" android:focusable="false" android:layout_weight="1"
+            android:layout_margin="8dp"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -21,7 +22,7 @@
         <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Перейти на сайт"
+                android:text="На сайт"
                 android:id="@+id/dialog_about_button_go" android:layout_gravity="center" android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>

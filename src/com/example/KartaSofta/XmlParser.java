@@ -268,4 +268,42 @@ public class XmlParser {
         return result;
 
     }
+    public static String AboutParse(Context context)
+    {
+        String result = "";
+        try {
+            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+            //  InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(context.getFilesDir().getPath() + "/" + MyApp.MAIN_XML_FILENAME)));
+            // BufferedReader stream = new BufferedReader(new FileInputStream(new File(context.getFilesDir().getPath() + "/" + MyApp.MAIN_XML_FILENAME)));
+
+            parser.setInput(new InputStreamReader((new FileInputStream(new File(context.getFilesDir().getPath() + "/" + MyApp.MAIN_XML_FILENAME)))));
+
+            while (parser.getEventType()!=XmlPullParser.END_DOCUMENT)
+            {
+                switch (parser.getEventType())
+                {
+                    case XmlPullParser.START_TAG:
+                        if (parser.getName().equals("description")&&parser.getDepth()<5)
+                        {
+                            result = parser.nextText();
+                        }
+                        break;
+                }
+                parser.next();
+            }
+        }
+        catch (XmlPullParserException e)
+        {
+            e.printStackTrace();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return  result;
+    }
 }

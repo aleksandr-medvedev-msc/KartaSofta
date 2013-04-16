@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import com.example.kartasofta.Category;
+import com.example.kartasofta.FragmentInterface;
+import com.kartasofta.catalog.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -72,18 +75,7 @@ public class F2 extends ListFragment {
             //adapter = new SimpleAdapter(getActivity(),adapterData,R.layout.image_layout,from,to);
 
             setListAdapter(adapter);
-            Log.d(LOG_TAG,adapter.getCount() + " : adapter count");
-            /*HashMap<String,Object> map = null;
-            try {
-                map = (HashMap<String,Object>)adapter.getItem(0);
-            } catch (ClassCastException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
 
-            if (map!=null)
-            {
-                Log.d(LOG_TAG,map.toString());
-            } */
         }
     }
     @Override
@@ -112,15 +104,17 @@ public class F2 extends ListFragment {
                     HashMap<String,Object> map = new HashMap<String, Object>();
                     String imageName = "";
                     String imageUrl = "";
-                    if (offer.picture!=null&&offer.picture.contains(".jpg"))
+                    if (offer.picture!=null)
+                    {
+                        imageUrl = offer.picture.toLowerCase();
+                    }
+                    if (!imageUrl.isEmpty()&&imageUrl.contains(".jpg"))
                     {
                         imageName = offer.id + ".jpg";
-                        imageUrl = offer.picture;
                     }
-                    if (offer.picture!=null&&offer.picture.contains(".png"))
+                    if (!imageUrl.isEmpty()&&imageUrl.contains(".png"))
                     {
                         imageName = offer.id + ".png";
-                        imageUrl = offer.picture;
                     }
                     File file = new File(getActivity().getFilesDir().getPath() + "/" + imageName) ;
                     if (!imageName.isEmpty()&&file.exists())
@@ -171,7 +165,14 @@ public class F2 extends ListFragment {
                     map.put("filename",offer.id);
                     maps.add(map);
                     imageNames.add(imageName);
-                    imageUrls.add(imageUrl);
+                                         if (!imageUrl.isEmpty())
+                                         {
+                    imageUrls.add(offer.picture);
+                                         }
+                    else
+                                         {
+                                             imageUrls.add(imageUrl);
+                                         }
                 }
             }
             setAdapterData(maps);
@@ -203,11 +204,9 @@ public class F2 extends ListFragment {
                 if (adapter!=null&&adapterData!=null)
                 {
                     String idOfOffer = imageName.substring(0,imageName.length()-4);
-
-                    Log.d(LOG_TAG,idOfOffer + " : idOfOffer");
                     for (int i = 0; i < adapterData.size(); i++)
                     {
-                        Log.d(LOG_TAG,adapterData.get(i).get("filename").toString() + " getid()");
+
                         if (idOfOffer.endsWith(adapterData.get(i).get("filename").toString()))
                         {
                             adapterData.get(i).remove("image");

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import com.kartasofta.catalog.R;
 
 import java.util.ArrayList;
 import java.util.List;
